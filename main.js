@@ -113,7 +113,13 @@ function showResult() {
         (targetColor.b - guessColor.b) ** 2
     );
 
-    const score = (100 * (1 - error / MAX_ERROR)).toFixed(2);;
+    const maxError = Math.sqrt(
+        Math.max(targetColor.r, 255 - targetColor.r) ** 2 +
+        Math.max(targetColor.g, 255 - targetColor.g) ** 2 +
+        Math.max(targetColor.b, 255 - targetColor.b) ** 2
+    );
+
+    const score = (100 * (1 - error / maxError)).toFixed(2);
 
     statusText.textContent = "Result";
     timerText.textContent = "";
@@ -121,8 +127,7 @@ function showResult() {
 
     colorBox.style.backgroundColor = toRgbString(targetColor);
 
-    scoreText.textContent =
-        `Score: ${score} / 100`;
+    scoreText.textContent = `Score: ${score} / 100`;
 }
 
 redSlider.addEventListener("input", updateGuessColor);
